@@ -4,13 +4,13 @@ import { FontAwesome } from "@expo/vector-icons";
 
 export default function HomeScreen() {
     return (
-        <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "lightblue",
-        width: "100%"
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "lightblue",
+          width: "100%"
       }}
     >
       <Text>Home</Text>
