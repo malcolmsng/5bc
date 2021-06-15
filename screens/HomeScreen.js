@@ -49,8 +49,6 @@ const HomeScreen = ({ navigation }) => {
     })
   }, [])
 
-  console.log(posts)
-
   return (
     <SafeAreaView style={{flex: 1}}>
     <View style={{width: "100%", flex: 1, justifyContent: "center", alignItems: "center", /*backgroundColor: "lightblue"*/}}>  
@@ -60,7 +58,7 @@ const HomeScreen = ({ navigation }) => {
         data={posts == [] ? DATA : posts}
         keyExtractor={item => item.id}
         renderItem={({ item }) => 
-          <PostCard data={item} onPress={() => navigation.navigate('View Post', {userId: item.id})}/>
+          <PostCard data={item} onPress={() => navigation.navigate('View Post', {postId: item.id})}/>
         }
       />
     </View>
