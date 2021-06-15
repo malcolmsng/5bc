@@ -1,17 +1,18 @@
 import React from 'react'
-import { Text, View } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Avatar, Button, Card, Title, Paragraph, Chip } from 'react-native-paper';
 import { Col, Row, Grid } from "react-native-paper-grid";
 
 
-export default function PostCard({ data }) {
+export default function PostCard({ data, onPress }) {
 
     const { name, cuisine, location, } = data 
     return (
         // <View style={{ width: "100%", flex: 1, justifyContent: "center", alignItems: "center", }}>
 
         <Card style={{ width: "100%", marginVertical: 10}}>
+            <TouchableOpacity onPress={onPress}>
         <Card.Title title={name} titleStyle={{ fontSize: 25}}/>
         <Card.Content>
         <View style={{ marginVertical: 10}}>
@@ -36,6 +37,7 @@ export default function PostCard({ data }) {
                 backgroundColor="white"
                 >share</FontAwesome.Button>
         </Card.Actions>
+        </TouchableOpacity>
         </Card>
 
         // </View>
