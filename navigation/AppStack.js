@@ -99,6 +99,7 @@ const HomeStack = ({ navigation }) => {
             name="View Post"
             component={ViewPostScreen}
             options={{
+                headerTitleVisible: false,
                 headerTitleAlign: 'center',
                 headerTitleStyle: {
                     color: "rgb(79, 175, 233)",

@@ -5,6 +5,7 @@ import { Formik } from 'formik'
 import DropDownPicker from 'react-native-dropdown-picker';
 import {Media, pickImage,takePicture} from '../components/Media';
 
+
 export default function CreatePostScreen() {
   
   
@@ -15,7 +16,7 @@ export default function CreatePostScreen() {
   const ref = useRef()
 
   return (
-    
+    <ScrollView>
     <View style={styles.container}>
       <Formik
         initialValues={{ name: '', address: '', description: '', cuisine: '' }}
@@ -121,6 +122,7 @@ export default function CreatePostScreen() {
         )}
       </Formik>
     </View>
+    </ScrollView>
   );
 
             }  
