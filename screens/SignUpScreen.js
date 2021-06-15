@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   Title: {
-    fontFamily: "Cochin",
+    //fontFamily: "Cochin",
     fontSize: 30,
     fontWeight: "bold"
 

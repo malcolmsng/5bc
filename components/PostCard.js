@@ -10,21 +10,19 @@ export default function PostCard() {
         // <View style={{ width: "100%", flex: 1, justifyContent: "center", alignItems: "center", }}>
 
         <Card style={{ width: "100%", marginTop: 5}}>
-        <Card.Title title="Name of stall" />
-
-        <Card.Content>
-            <Grid>
-            <Row>
-            <Paragraph>
-                <Col>{<Chip style={{ backgroundColor: "pink", marginRight: 10, justifyContent: "center", alignItems: "center"}}>cuisine</Chip> } </Col>
-                <Col>{<Chip style={{ backgroundColor: "lightblue", marginRight: 10, justifyContent: "center", alignItems: "center"}}>location</Chip> } </Col>
+        <Card.Title title="Name of stall" right={() =>
+            <View>
+                <Text style={{color: "white"}}>S</Text> 
+            <Paragraph> 
+                <Chip style={{ backgroundColor: "lightpink", }}>cuisine</Chip> 
+                <Text style={{color: "white"}}>S</Text>            
+                <Chip style={{ backgroundColor: "lightblue", }}>location</Chip> 
+                <Text style={{color: "white"}}>S</Text> 
             </Paragraph>
-
-            </Row>
-            </Grid>
-        </Card.Content>
+            </View> 
+        } />
         <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-        <Card.Actions>
+        <Card.Actions style={{justifyContent: "space-around"}}>
             <FontAwesome.Button 
                 name="heart-o"
                 color="red"
