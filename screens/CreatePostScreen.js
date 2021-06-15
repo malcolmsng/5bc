@@ -9,7 +9,7 @@ import { useAuth } from '../contexts/AuthContext';
 import 'firebase/firestore';
 
 export default function CreatePostScreen({ navigation }) {
-
+  
   const { currentUser } = useAuth()
 
   const submitForm = (values) => {
