@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { TextInput } from "react-native-paper";
+import { TextInput, Snackbar } from "react-native-paper";
 import { Button } from "react-native-paper";
+
+import { useAuth } from "../contexts/AuthContext";
+import { db } from "../firebase";
+
 
 const inputColor = "rgb(79, 175, 233)";
 
@@ -11,6 +15,48 @@ export default function SignUpScreen({navigation}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [visible, setVisible] = useState(false);
+  const { signup } = useAuth()
+
+  const onDismissSnackBar = () => setVisible(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    if (!firstName || !lastName || !email) {
+      setError("Some fields are not filled in")
+      setVisible(true)
+      return 
+    }
+
+    if (password !== confirmPassword) {
+        setError("Passwords do not match")
+        setVisible(true)
+        return 
+    }
+
+    try {
+        setLoading(true)
+        setError('')
+        const cred = await signup(email, password)
+        // await db.collection('users').doc(cred.user.uid).set({
+        //     password,
+        //     email,
+        //     firstName,
+        //     lastName,
+        // })
+
+    } catch (err) {
+      console.log(err.message)
+      setError(err.message)
+      setVisible(true)
+    }
+
+    setLoading(false)
+}
+
 
     return (
       <View style={styles.container}>
@@ -106,8 +152,10 @@ export default function SignUpScreen({navigation}) {
           />
         </View>
         <Button
+          disabled={loading}
           color="maroon"
           mode="contained"
+          onPress={handleSubmit}
           contentStyle={{
             height: 50,
           }}
@@ -115,6 +163,19 @@ export default function SignUpScreen({navigation}) {
           Sign Up
         </Button>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        duration={2000}
+        style={{backgroundColor: 'red'}}
+        action={{
+          label: 'dismiss',
+          onPress: () => {
+            // Do something
+          },
+        }}>
+          {error}
+      </Snackbar>
     </View>
     )
 }

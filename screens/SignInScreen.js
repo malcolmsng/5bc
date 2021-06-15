@@ -1,15 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, Animated } from "react-native";
-import { TextInput } from "react-native-paper";
+import { TextInput, Snackbar } from "react-native-paper";
 import { Button } from "react-native-paper";
+import { useAuth } from "../contexts/AuthContext";
 
 const inputColor = "rgb(79, 175, 233)";
 
 export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [visible, setVisible] = useState(false);
+  const { login } = useAuth()
   const fadeAnim = useRef(new Animated.Value(0)).current
-  
+
+  const onDismissSnackBar = () => setVisible(false);
+
   useEffect(() => {
     Animated.timing(
       fadeAnim,
@@ -20,6 +27,29 @@ export default function SignInScreen({ navigation }) {
       }
     ).start();
   }, [fadeAnim])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email) {
+      setError("You have not entered an email")
+      setVisible(true)
+      return 
+    }
+
+    try {
+        setLoading(true)
+        await login(email, password)
+        setError('')
+
+    } catch (err) {
+        setError(err.message)
+        setVisible(true)
+    }
+
+    setLoading(false)
+}
+
 
   return (
     <Animated.View                 // Special animatable View
@@ -72,10 +102,12 @@ export default function SignInScreen({ navigation }) {
         </View>
         <Button
           color="maroon"
+          disabled={loading}
           mode="contained"
           contentStyle={{
             height: 50,
           }}
+          onPress={handleSubmit}
         >
           Sign In
         </Button>
@@ -88,6 +120,19 @@ export default function SignInScreen({ navigation }) {
           </Text>
         </TouchableOpacity>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        duration={2000}
+        style={{backgroundColor: 'red'}}
+        action={{
+          label: 'dismiss',
+          onPress: () => {
+            // Do something
+          },
+        }}>
+          {error}
+      </Snackbar>
     </Animated.View>
   );
 }
