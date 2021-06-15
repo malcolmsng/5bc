@@ -1,8 +1,10 @@
 import React, { useRef } from 'react'
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { Button, TextInput  } from 'react-native-paper';
 import { Formik } from 'formik'
 import DropDownPicker from 'react-native-dropdown-picker';
+import ChipInput from 'material-ui-chip-input'
+
 
 export default function CreatePostScreen() {
   
@@ -11,7 +13,7 @@ export default function CreatePostScreen() {
   const ref = useRef()
 
   return (
-    
+    <ScrollView>
     <View style={styles.container}>
       <Formik
         initialValues={{ name: '', address: '', description: '', cuisine: '' }}
@@ -97,6 +99,7 @@ export default function CreatePostScreen() {
         )}
       </Formik>
     </View>
+    </ScrollView>
   );
 }
 
