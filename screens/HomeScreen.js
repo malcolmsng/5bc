@@ -8,6 +8,7 @@ import PostCard from '../components/PostCard';
 
 export default function HomeScreen() {
     return (
+
       <View style={{ width: "100%", flex: 1, justifyContent: "center", alignItems: "center", }}>
         <ScrollView style={{backgroundColor: "rgb(240, 240, 240)", width: "100%", flex: 1}}>
         <Grid style={{width: "100%",  flex: 1, justifyContent: "center", alignItems: "center",}}>
@@ -38,6 +39,7 @@ export default function HomeScreen() {
         </Grid>
         </ScrollView>
       </View>
+
     )
 }
 
