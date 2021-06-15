@@ -10,17 +10,15 @@ export default function PostCard() {
         // <View style={{ width: "100%", flex: 1, justifyContent: "center", alignItems: "center", }}>
 
         <Card style={{ width: "100%", marginTop: 5}}>
-        <Card.Title title="Name of stall" right={() =>
-            <View>
-                <Text style={{color: "white"}}>S</Text> 
-            <Paragraph> 
-                <Chip style={{ backgroundColor: "lightpink", }}>cuisine</Chip> 
-                <Text style={{color: "white"}}>S</Text>            
-                <Chip style={{ backgroundColor: "lightblue", }}>location</Chip> 
-                <Text style={{color: "white"}}>S</Text> 
-            </Paragraph>
-            </View> 
-        } />
+        <Card.Title title="Name of stall" titleStyle={{ fontSize: 25}}/>
+        <Card.Content>
+        <View style={{ marginBottom: 10}}>
+            <Paragraph>
+                <Chip style={{ backgroundColor: "lightpink", justifyContent: "center", alignItems: "center",  }} textStyle={{ fontSize: 17, justifyContent: "center", alignItems: "center",}} >cuisine</Chip>          
+                <Chip style={{ backgroundColor: "lightblue", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, justifyContent: "center", alignItems: "center",}} >location</Chip> 
+            </Paragraph> 
+        </View>
+        </Card.Content>
         <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
         <Card.Actions style={{justifyContent: "space-around"}}>
             <FontAwesome.Button 
@@ -32,7 +30,8 @@ export default function PostCard() {
                 name="share-square-o"
                 color="black"
                 size={20}
-                backgroundColor="white">share</FontAwesome.Button>
+                backgroundColor="white"
+                >share</FontAwesome.Button>
         </Card.Actions>
         </Card>
 
