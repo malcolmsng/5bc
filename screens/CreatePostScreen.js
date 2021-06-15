@@ -1,15 +1,18 @@
 import React, { useRef } from 'react'
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, Alert, Platform , TouchableOpacity,} from "react-native";
 import { Button, TextInput  } from 'react-native-paper';
 import { Formik } from 'formik'
 import DropDownPicker from 'react-native-dropdown-picker';
-import ChipInput from 'material-ui-chip-input'
+import {Media, pickImage,takePicture} from '../components/Media';
 
 
 export default function CreatePostScreen() {
   
+  
   //states
   //variables
+  
+  
   const ref = useRef()
 
   return (
@@ -87,7 +90,27 @@ export default function CreatePostScreen() {
                 }
               }}
             />
-
+             
+             <View style= {{flexDirection : "row", flex: 1, justifyContent: 'space-evenly', marginTop: '10'}}>
+            <Button compact = {true}
+            mode = 'contained'
+            icon = "camera-image"
+            color = "maroon"
+            onPress = {() => {pickImage}}
+            >
+              UPLOAD IMAGE
+              </Button>
+              <Button compact = {true}
+            mode = 'contained'
+            icon = 'camera'
+            color = 'maroon'
+            style = {{width : 170}}
+            onPress = {() => {takePicture}}
+            >
+              TAKE PHOTO
+              </Button>  
+                
+              </View>
             <Button 
               style={{marginTop: 10}}
               color='maroon' 
@@ -101,8 +124,8 @@ export default function CreatePostScreen() {
     </View>
     </ScrollView>
   );
-}
 
+            }  
 const styles = StyleSheet.create({
   input: {
     fontSize: 18,
