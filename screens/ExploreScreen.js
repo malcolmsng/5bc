@@ -3,8 +3,8 @@ import { Text, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
 export default function ExploreScreen() {
-    return (
-        <View
+  return (
+    <View
       style={{
         flex: 1,
         justifyContent: "center",
@@ -12,10 +12,19 @@ export default function ExploreScreen() {
         backgroundColor: "lightblue",
         width: "100%"
       }}
-    >
-      <Text>Explore</Text>
-      <FontAwesome name="search" size={99} color="rgba(255, 0, 0, 0.5)" />
-    </View>
-    )
+>
+  <Image
+     style={{
+      justifyContent: "center",
+      alignItems: "center",
+     }}
+     source={{
+       uri: 'https://picsum.photos/700'
+     }}
+  />
+  <Text>View Post</Text>
+  <FontAwesome name="file-word-o" size={99} color="rgba(255, 0, 0, 0.5)" />
+</View>
+)
 }
 
