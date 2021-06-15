@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from "../screens/HomeScreen";
@@ -9,11 +9,19 @@ import ExploreScreen from "../screens/ExploreScreen";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import CreatePostScreen from "../screens/CreatePostScreen";
 import { Button } from 'react-native-paper';
+import { useAuth } from '../contexts/AuthContext';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const HomeStack = ({ navigation }) => {
+    const { logout } = useAuth()
+
+    async function handleLogout() {
+        await logout()
+    }
+
     return (
     <Stack.Navigator>
         <Stack.Screen 
@@ -40,6 +48,15 @@ const HomeStack = ({ navigation }) => {
                 //         />
                 //     </View>
                 // ),
+                headerLeft: () => (
+                    <View style={{marginLeft: 10}}>
+                        <Button
+                            onPress={handleLogout}
+                        >
+                            Sign Out
+                        </Button>
+                    </View>
+                ),
                 headerRight: () => (
                     <View style={{marginRight: 10}}>
                         <FontAwesome.Button 
