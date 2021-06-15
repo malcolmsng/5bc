@@ -19,7 +19,7 @@ export default function PostCard({ data, onPress }) {
             <Paragraph>
                 <Chip style={{ backgroundColor: "lightpink", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, }} >{cuisine}</Chip>         
                 <Text style={{color: "white"}}>s</Text>
-                <Chip style={{ backgroundColor: "#a45ee5", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, }} >{location}</Chip> 
+                <Chip style={{ backgroundColor: "lightblue", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, }} >{location}</Chip> 
             </Paragraph> 
         </View>
         </Card.Content>
