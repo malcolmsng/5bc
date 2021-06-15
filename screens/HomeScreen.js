@@ -1,12 +1,11 @@
-import React from 'react'
-import { Text, View, ScrollView, FlatList} from "react-native";
+import React, { useEffect, useState } from 'react'
+import { Text, View, ScrollView, FlatList, SafeAreaView} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
 import { Col, Row, Grid } from "react-native-paper-grid";
 import PostCard from '../components/PostCard';
 
-
-export default function HomeScreen() {
+const HomeScreen = ({ navigation }) => {
 
   const DATA = [
     {
@@ -39,17 +38,24 @@ export default function HomeScreen() {
     },
   ]
 
-    return (
-      <View style={{width: "100%", flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "lightblue"}}>  
-        <FlatList 
-          style={{height: "100%", width: "95%"}}
-          data={DATA}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => 
-            <PostCard data={item} />
-          }
-        />
-      </View>
-    )
+  // const [posts, setPosts] = useState(null)
+  // const [loading, setLoading] = useState(true)
+
+  return (
+    <SafeAreaView style={{flex: 1}}>
+    <View style={{width: "100%", flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "lightblue"}}>  
+      <FlatList 
+        style={{height: "100%", width: "95%"}}
+        showsVerticalScrollIndicator={false}
+        data={DATA}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => 
+          <PostCard data={item} onPress={() => navigation.navigate('View Post', {userId: item.id})}/>
+        }
+      />
+    </View>
+    </SafeAreaView>
+  )
 }
 
+export default HomeScreen
