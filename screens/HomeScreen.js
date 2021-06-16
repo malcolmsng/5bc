@@ -7,6 +7,8 @@ import PostCard from '../components/PostCard';
 import { db } from '../firebase';
 import algoliasearch from 'algoliasearch';
 
+import SearchBox from '../algolia/SearchBox';
+
 
 import {
   InstantSearch,
@@ -36,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{width: "100%", justifyContent: "center", alignItems: "center", backgroundColor: "lightblue"}}>  
+      <View style={{width: "100%", justifyContent: "center", alignItems: "center", }}>  
         <InstantSearch
             searchClient={searchClient}
             indexName="posts"
@@ -44,7 +46,7 @@ const HomeScreen = ({ navigation }) => {
             {/* <Configure
                 hitsPerPage={1}
             /> */}
-            {/* <SearchBox /> */}
+            <SearchBox />
             <InfiniteHits />
           </InstantSearch>
       </View>
