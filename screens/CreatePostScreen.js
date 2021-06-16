@@ -112,7 +112,7 @@ export default function CreatePostScreen({ navigation }) {
               label="Cuisine"
               placeholder='Cuisine of stall'
               onChangeText={handleChange('cuisine')}
-              value={values.address}
+              value={values.cuisine}
               selectionColor="rgb(79, 175, 233)"
               theme={{
                 colors: {
