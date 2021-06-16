@@ -36,21 +36,21 @@ export default function PostCard({ data, onPress }) {
 
     const handleFave = async () => {
         await docRef.update({
-            favourites: firebase.firestore.FieldValue.arrayUnion(data.id)
+            favourites: firebase.firestore.FieldValue.arrayUnion(objectID)
         })
         setCurrentUserData({
             ...currentUserData,
-            favourites: [...currentUserData.favourites, data.id]
+            favourites: [...currentUserData.favourites, objectID]
         })
         setFave(true)
     }
 
     const handleUnFave = async () => {
         await docRef.update({
-            favourites: firebase.firestore.FieldValue.arrayRemove(data.id)
+            favourites: firebase.firestore.FieldValue.arrayRemove(objectID)
         })
         const faves = [...currentUserData.favourites]
-        const index  = faves.indexOf(data.id)
+        const index  = faves.indexOf(objectID)
         faves.splice(index, 1)
         setFave({
             ...currentUserData,
