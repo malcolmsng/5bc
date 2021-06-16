@@ -4,6 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
 import { Col, Row, Grid } from "react-native-paper-grid";
 import PostCard from '../components/PostCard';
+import { db } from '../firebase';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -38,19 +39,26 @@ const HomeScreen = ({ navigation }) => {
     },
   ]
 
-  // const [posts, setPosts] = useState(null)
-  // const [loading, setLoading] = useState(true)
+  const [posts, setPosts] = useState([])
+  
+  useEffect(() => {
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapShot => {
+      setPosts(snapShot.docs.map(doc => ({
+        id: doc.id, ...doc.data()
+      })))
+    })
+  }, [])
 
   return (
     <SafeAreaView style={{flex: 1}}>
-    <View style={{width: "100%", flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "lightblue"}}>  
+    <View style={{width: "100%", flex: 1, justifyContent: "center", alignItems: "center", /*backgroundColor: "lightblue"*/}}>  
       <FlatList 
         style={{height: "100%", width: "95%"}}
         showsVerticalScrollIndicator={false}
-        data={DATA}
+        data={posts == [] ? DATA : posts}
         keyExtractor={item => item.id}
         renderItem={({ item }) => 
-          <PostCard data={item} onPress={() => navigation.navigate('View Post', {userId: item.id})}/>
+          <PostCard data={item} onPress={() => navigation.navigate('View Post', {postId: item.id})}/>
         }
       />
     </View>

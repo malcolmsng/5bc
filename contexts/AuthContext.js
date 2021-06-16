@@ -33,11 +33,11 @@ export function AuthProvider({ children }) {
         const unsubscribe = auth.onAuthStateChanged(async user => {
             setCurrentUser(user)
             
-            // if (user) {
-                // const data = await db.collection('users').doc(user.uid).get().then(res => res.data())
-                // setCurrentUserData(data) 
-                
-            // }
+            //if there's a current user, set up currentUser context
+            if (user) {
+                const data = await db.collection('users').doc(user.uid).get().then(res => res.data())
+                setCurrentUserData(data) 
+            }
             
             setLoading(false)
             

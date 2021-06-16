@@ -122,6 +122,19 @@ const HomeStack = ({ navigation }) => {
                             color="rgb(79, 175, 233)"
                         />
                     </View>
+                
+                ),
+                headerRight: () => (
+                    <View style={{marginRight: 10}}>
+                        <FontAwesome.Button 
+                            name="heart"
+                            size={22}
+                            backgroundColor="#fff"
+                            color="red"
+                            //onPress={() => navigation.navigate('My Profile')}
+                            //onPress favourite
+                        />
+                    </View>
                 ),
             }}
         />

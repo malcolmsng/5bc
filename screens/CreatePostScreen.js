@@ -1,41 +1,73 @@
-import React, { useRef } from 'react'
-import { Text, View, StyleSheet, Alert, Platform , TouchableOpacity, ScrollView} from "react-native";
-import { Button, TextInput  } from 'react-native-paper';
+
+import React, { useState, useref } from 'react'
+import { Text, View, StyleSheet, Alert, Platform, TouchableOpacity, ScrollView } from "react-native";
+import { Button, TextInput as Input  } from 'react-native-paper';
 import { Formik } from 'formik'
 import DropDownPicker from 'react-native-dropdown-picker';
-import {Media, pickImage,takePicture} from '../components/Media';
+import { Media, pickImage, takePicture } from '../components/Media';
+import { db } from '../firebase';
+import { useAuth } from '../contexts/AuthContext';
+import 'firebase/firestore';
+import firebase from "firebase/app"
 
 
+export default function CreatePostScreen({ navigation }) {
 
-export default function CreatePostScreen({navigation}) {
+  
+  const { currentUser, currentUserData, setCurrentUserData } = useAuth()
+  const docRef = db.collection("users").doc(currentUser.uid)
 
-  
-  
-  //states
-  //variables
-  
-  
-  const ref = useRef()
+  const submitForm = (values) => {
+    const { name, address, description, cuisine } = values
+    db.collection('posts').add({
+      name,
+      address,
+      description,
+      cuisine,
+      location: "location",
+      author: currentUser.uid,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+    .then(
+      post => {
+        docRef.update({
+          posts: firebase.firestore.FieldValue.arrayUnion(post.id)
+        })
+        const posts = [...currentUserData.posts]
+        posts.push(post.id)
+        setCurrentUserData({
+            ...currentUserData, 
+            posts
+        })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
   return (
     <ScrollView>
     <View style={styles.container}>
       <Formik
         initialValues={{ name: '', address: '', description: '', cuisine: '' }}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          submitForm(values);
+          setSubmitting(false)
+          resetForm({})
+          navigation.navigate('HomeTab')
+          alert('Post Submitted!')
         }}
       >
-        {props => (
+        {({ handleChange, handleSubmit, values }) => (
           <View style={{width: "70%"}}>
-            <TextInput
+            <Input
               style={styles.input}
               mode="outlined"
               numberOfLines={1}
               label="Name"
-              //placeholder='Name of stall'
-              onChangeText={props.handleChange('name')}
-              value={props.values.name}
+              placeholder='Name of stall'
+              onChangeText={handleChange('name')}
+              value={values.name}
               selectionColor="rgb(79, 175, 233)"
               theme={{
                 colors: {
@@ -44,14 +76,14 @@ export default function CreatePostScreen({navigation}) {
               }}
             />
 
-            <TextInput 
+            <Input 
               style={styles.input}
               mode="outlined"
               numberOfLines={1}
               label="Address"
-              //placeholder='Address of stall'
-              onChangeText={props.handleChange('address')}
-              value={props.values.address}
+              placeholder='Address of stall'
+              onChangeText={handleChange('address')}
+              value={values.address}
               selectionColor="rgb(79, 175, 233)"
               theme={{
                 colors: {
@@ -60,14 +92,14 @@ export default function CreatePostScreen({navigation}) {
               }}
             />
 
-            <TextInput 
+            <Input 
               style={styles.input}
               mode="outlined"
               numberOfLines={1}
               label="Cuisine"
-              //placeholder='Cuisine'
-              onChangeText={props.handleChange('cuisine')}
-              value={props.values.cuisine}
+              placeholder='Specialty Cuisine of Stall'
+              onChangeText={handleChange('cuisine')}
+              value={values.cuisine}
               selectionColor="rgb(79, 175, 233)"
               theme={{
                 colors: {
@@ -76,15 +108,15 @@ export default function CreatePostScreen({navigation}) {
               }}
             />
 
-            <TextInput
+            <Input
               multiline
               numberOfLines={10}
               style={styles.input}
               mode="outlined"
               label="Description"
-              //placeholder='Some details...'
-              onChangeText={props.handleChange('description')}
-              value={props.values.description}
+              placeholder='Some details...'
+              onChangeText={handleChange('description')}
+              value={values.description}
               selectionColor="rgb(79, 175, 233)"
               theme={{
                 colors: {
@@ -92,8 +124,7 @@ export default function CreatePostScreen({navigation}) {
                 }
               }}
             />
-             
-            
+                         
             <Button compact = {true}
             mode = 'contained'
             icon = "camera-image"
@@ -104,11 +135,11 @@ export default function CreatePostScreen({navigation}) {
               </Button>
                
                 
-            
             <Button 
               style={{marginTop: 10}}
-              color='maroon' 
-              onPress={props.handleSubmit} 
+              color='maroon'
+              //disabled={!isValid}
+              onPress={handleSubmit} 
               mode="contained"
               > Post 
             </Button> 
@@ -118,8 +149,8 @@ export default function CreatePostScreen({navigation}) {
     </View>
     </ScrollView>
   );
+}  
 
-            }  
 const styles = StyleSheet.create({
   input: {
     fontSize: 18,

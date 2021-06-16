@@ -1,25 +1,54 @@
-import React from 'react'
-import { Text, View, Button } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import React, { useState, useEffect } from 'react'
+import { Text, View, Button, Image} from "react-native";
+import { Headline, Paragraph, Subheading, Chip } from 'react-native-paper';
+import { db } from '../firebase';
 
 const ViewPostScreen = ({ route }) => {
 
-    const id = route.params.userId
+    const id = route.params.postId
+    const [data, setData] = useState({})
+
+    useEffect(() => {
+      db.collection('posts').doc(id).get().then(snapShot => {
+        setData({...snapShot.data()})
+      })
+    }, [])
 
     return (
-        <View
-          style={{
+      <View
+        style={{
           flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "lightblue",
+          //justifyContent: "center",
+          //alignItems: "center",
+          backgroundColor: "white",
           width: "100%"
-      }}
-    >
-      <Text>View Post</Text>
-      <Text>{id}</Text>
-      <FontAwesome name="file-word-o" size={99} color="rgba(255, 0, 0, 0.5)" />
-    </View>
+        }}
+      >
+        <Image
+          source={{
+            uri: 'https://picsum.photos/700'
+          }}
+          style={{
+            height: 300,
+            width: "100%"
+          }}
+        />
+        <Headline style={{fontSize: 32, padding: 10}}>{data.name}</Headline>
+        <Subheading style={{padding: 10}}>
+          <Chip 
+            style={{ backgroundColor: "lightpink", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, }}
+          >
+            {data.cuisine}
+          </Chip>
+          <Text style={{color: "white"}}>s</Text>
+          <Chip 
+            style={{ backgroundColor: "lightblue", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, }}
+          >
+            {data.location}
+          </Chip>
+        </Subheading>
+        <Paragraph style={{fontSize: 20, padding: 10}}>{data.description}</Paragraph>
+      </View>
     )
 }
 

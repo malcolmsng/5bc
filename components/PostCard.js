@@ -1,11 +1,49 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, View, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Avatar, Button, Card, Title, Paragraph, Chip } from 'react-native-paper';
 import { Col, Row, Grid } from "react-native-paper-grid";
-
+import { db } from '../firebase';
+import { useAuth } from '../contexts/AuthContext';
+import firebase from "firebase/app"
 
 export default function PostCard({ data, onPress }) {
+
+    const { currentUser, currentUserData, setCurrentUserData } = useAuth()
+    const docRef = db.collection("users").doc(currentUser.uid)
+
+    const [fave, setFave] = useState(false)
+
+    useEffect(() => {
+        if (currentUser && currentUserData && currentUserData.favourites) {
+            setFave(currentUserData.favourites.includes(data.id))
+        }
+    }, [])
+
+    const handleFave = async () => {
+        await docRef.update({
+            favourites: firebase.firestore.FieldValue.arrayUnion(data.id)
+        })
+        setCurrentUserData({
+            ...currentUserData,
+            favourites: [...currentUserData.favourites, data.id]
+        })
+        setFave(true)
+    }
+
+    const handleUnFave = async () => {
+        await docRef.update({
+            favourites: firebase.firestore.FieldValue.arrayRemove(data.id)
+        })
+        const faves = [...currentUserData.favourites]
+        const index  = faves.indexOf(data.id)
+        faves.splice(index, 1)
+        setFave({
+            ...currentUserData,
+            faves
+        })
+        setFave(false)
+    }
 
     const { name, cuisine, location, } = data 
     return (
@@ -19,17 +57,19 @@ export default function PostCard({ data, onPress }) {
             <Paragraph>
                 <Chip style={{ backgroundColor: "lightpink", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, }} >{cuisine}</Chip>         
                 <Text style={{color: "white"}}>s</Text>
-                <Chip style={{ backgroundColor: "#a45ee5", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, }} >{location}</Chip> 
+                <Chip style={{ backgroundColor: "lightblue", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, }} >{location}</Chip> 
             </Paragraph> 
         </View>
         </Card.Content>
         <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
         <Card.Actions style={{justifyContent: "space-around"}}>
             <FontAwesome.Button 
-                name="heart-o"
+                name= { fave ? "heart" : "heart-o"}
                 color="red"
                 size={22}
-                backgroundColor="white"/>
+                backgroundColor="white"
+                onPress={ fave ? handleUnFave : handleFave }
+            />
             <FontAwesome.Button 
                 name="share-square-o"
                 color="black"
