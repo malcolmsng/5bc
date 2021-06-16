@@ -163,8 +163,8 @@ const SearchBox = ({ currentRefinement, refine }) => {
                 mode="contained" 
                 onPress={() => {
                   refine("")
-                  // areaDropdownRef.current.reset()
-                  // cuisineDropdownRef.current.reset()
+                  areaDropdownRef.current.reset()
+                  cuisineDropdownRef.current.reset()
                   setArea("")
                   setCuisine("")
                   setBoxVal("")
