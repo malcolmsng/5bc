@@ -123,7 +123,7 @@ const HomeStack = ({ navigation }) => {
                 headerRight: () => (
                     <View style={{marginRight: 10}}>
                         <FontAwesome.Button 
-                            name="heart"
+                            name="heart-o"
                             size={22}
                             backgroundColor="#fff"
                             color="red"
