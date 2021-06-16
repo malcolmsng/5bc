@@ -59,7 +59,7 @@ export default function PostCard({ data, onPress }) {
     return (
         // <View style={{ width: "100%", flex: 1, justifyContent: "center", alignItems: "center", }}>
 
-        <Card style={{ width: "100%", marginVertical: 10}}>
+        <Card style={{ width: "100%", marginVertical: 10, borderRadius: 4, borderColor: "lightgray", borderWidth: 1}}>
             <TouchableOpacity onPress={onPress}>
         <Card.Title title={name} titleStyle={{ fontSize: 25}}/>
         <Card.Content>
