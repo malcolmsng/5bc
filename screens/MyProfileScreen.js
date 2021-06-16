@@ -4,6 +4,8 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from '../firebase';
 import PostCard from '../components/PostCard'
+import 'firebase/firestore';
+import firebase from "firebase/app"
 
 export default function MyProfileScreen({ navigation }) {
 

@@ -2,8 +2,12 @@ import React from 'react'
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { connectInfiniteHits } from 'react-instantsearch-native';
 import PostCard from '../components/PostCard';
+import { useNavigation } from '@react-navigation/native';
 
 const InfiniteHits = ({ hits, hasMore, refineNext }) => {
+
+  const navigation = useNavigation();
+  
   if (hits.length === 0) {
     return (
       <View style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
@@ -26,7 +30,7 @@ const InfiniteHits = ({ hits, hasMore, refineNext }) => {
       // style={styles.separator}
       onEndReached={() => hasMore && refineNext()}
       renderItem={({ item }) => (
-            <PostCard data={item}/>
+            <PostCard data={item} onPress={() => navigation.navigate('View Post', {postId: item.objectID})}/>
       )}
     />
   );
