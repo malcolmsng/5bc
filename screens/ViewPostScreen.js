@@ -96,7 +96,7 @@ export default ViewPostScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-center",
+    justifyContent: "center",
     //alignItems: "center",
     backgroundColor: "white",
     width: "100%"
