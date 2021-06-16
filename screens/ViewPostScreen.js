@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, Image} from "react-native";
 import { Headline, Paragraph, Subheading, Chip } from 'react-native-paper';
 import { db } from '../firebase';
 
@@ -24,6 +24,15 @@ const ViewPostScreen = ({ route }) => {
           width: "100%"
         }}
       >
+        <Image
+          source={{
+            uri: 'https://picsum.photos/700'
+          }}
+          style={{
+            height: 300,
+            width: "100%"
+          }}
+        />
         <Headline style={{fontSize: 32, padding: 10}}>{data.name}</Headline>
         <Subheading style={{padding: 10}}>
           <Chip 
