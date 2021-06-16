@@ -15,7 +15,7 @@ export default function PostCard({ data, onPress }) {
         name,
     } = data
 
-    console.log(address, author, cuisine, description, location, name)
+    // console.log(address, author, cuisine, description, location, name)
 
     // return (
     //     <View>

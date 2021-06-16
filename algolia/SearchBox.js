@@ -1,37 +1,50 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { connectSearchBox } from 'react-instantsearch-native';
 import { TextInput, Button } from 'react-native-paper';
-// import SelectDropdown from 'react-native-select-dropdown'
+import SelectDropdown from 'react-native-select-dropdown'
+import { set } from 'react-native-reanimated';
 
 
-const countries = ["Egypt", "Canada", "Australia", "Ireland"]
+const cuisines = ["Chinese", "Western", "Muslim", "Japanese", "Indian", "Thai", "Korean"]
+const areas = ["Hougang", "Jurong", "Sembawang", "Changi"]
 const inputColor = "rgb(79, 175, 233)";
 
 
 const styles = StyleSheet.create({
   container: {
     width: "95%",
+    display: "flex",
+    alignItems: 'center',
+    justifyContent: 'center'
     // backgroundColor: 'maroon',
   },
   input: {
-    height: 48,
+    height: 38,
     fontSize: 16,
     backgroundColor: 'white',
-    
+    width: '95%',
+    borderColor: 'white'    
   },
 });
 
 const SearchBox = ({ currentRefinement, refine }) => {
+  console.log("rendering searchbox")
   const [boxVal, setBoxVal] = useState("")
-  const [filter, setFilter] = useState([])
+  const [cuisine, setCuisine] = useState()
+  const [area, setArea] = useState()
+  const cuisineDropdownRef = useRef({})
+  const areaDropdownRef = useRef({})
 
-  function onPress() {
+  
+
+  function search() {
     let searchStr = boxVal
-    for (const val of filter) {
-      searchStr += " "
-      searchStr += val
-    }
+    const addCuisine = cuisine ? cuisine : ""
+    const addArea = area ? area : ""
+    searchStr = searchStr + " " + addCuisine
+    searchStr = searchStr + " " + addArea
+    console.log(searchStr)
     refine(searchStr)
   }
 
@@ -43,7 +56,6 @@ const SearchBox = ({ currentRefinement, refine }) => {
           selectionColor={inputColor}
           onChangeText={value => {
             setBoxVal(value)
-            onPress()
           }}
           value={boxVal}
           placeholder="Search"
@@ -51,54 +63,80 @@ const SearchBox = ({ currentRefinement, refine }) => {
             colors: {
               primary: inputColor,
               background: "white",
-              // backgroundColor: "transparent"
             },
           }}
         />
-         {/* <TextInput
-            label="Password"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={(val) => setPassword(val)}
-            selectionColor={inputColor}
-            mode="outlined"
-            theme={{
-              colors: {
-                primary: inputColor,
-                background: "white",
-              },
-            }}
-          /> */}
+         
      
 
-      {/* <SelectDropdown
-        defaultButtonText="Select an area"
-        data={countries}
-        onSelect={(selectedItem, index) => {
-          setFilter([...filter, selectedItem])
-        }}
-        buttonTextAfterSelection={(selectedItem, index) => {
-          // text represented after item is selected
-          // if data array is an array of objects then return selectedItem.property to render after item is selected
-          return selectedItem
-        }}
-        rowTextForSelection={(item, index) => {
-          // text represented for each item in dropdown
-          // if data array is an array of objects then return item.property to represent item in dropdown
-          return item
-        }}
-      /> */}
+      
 
+       <View style={{display: "flex", flexDirection: 'row'}}>
+         <View style={{flex: 1}}>
+          <SelectDropdown
+          ref={cuisineDropdownRef}
+          buttonStyle={{
+            margin: 10,
+            borderRadius: 5,
+            height: 30,
+            backgroundColor: 'white',
+            width: "90%"
+          }}
+          defaultButtonText="Select Cuisine"
+          data={cuisines}
+          onSelect={(selectedItem, index) => {
+            setCuisine(selectedItem)
+          }}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            return selectedItem
+          }}
+          rowTextForSelection={(item, index) => {
+            return item
+          }}
+        />
+
+         </View>
+         <View style={{flex: 1}}>
+          <SelectDropdown
+            ref={areaDropdownRef}
+            buttonStyle={{
+              margin: 10,
+              borderRadius: 5,
+              height: 30,
+              backgroundColor: 'white',
+              width: "90%"
+
+            }}
+            defaultButtonText="Select Area"
+            data={areas}
+            onSelect={(selectedItem, index) => {
+              setArea(selectedItem)
+            }}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              return selectedItem
+            }}
+            rowTextForSelection={(item, index) => {
+              return item
+            }}
+          />
+         </View>
+      </View> 
+       
       <View style={{display: 'flex', flexDirection: 'row', marginTop: 7, paddingBottom: 7}}>
-        <View style={{flex: 2}}></View>
+        <View style={{flex: 1}}></View>
         <View style={{flex: 1}}>
-          <View style={{display: 'flex', flexDirection: 'row'}}>
+          <View style={{display: 'flex', flexDirection: 'row', width: '95%'}}>
             <View style={{flex: 6}}>
               <Button 
                 mode="contained" 
                 onPress={() => {
                   refine("")
+                  areaDropdownRef.current.reset()
+                  cuisineDropdownRef.current.reset()
+                  setArea("")
+                  setCuisine("")
                   setBoxVal("")
+                  
                 }}
                 color="white"
               >
@@ -107,7 +145,18 @@ const SearchBox = ({ currentRefinement, refine }) => {
                 </Text>
               </Button>  
             </View>
-            {/* <View style={{flex: 1}}></View> */}
+            <View style={{flex: 1}}></View>
+            <View style={{flex: 6}}>
+              <Button 
+                mode="contained" 
+                onPress={search}
+                color="white"
+              >
+                <Text style={{fontSize: 10}}>
+                  Go
+                </Text>
+              </Button>  
+            </View>
             
           </View>
          
