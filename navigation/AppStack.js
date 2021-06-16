@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from "../screens/HomeScreen";
 import MyProfileScreen from "../screens/MyProfileScreen";
 import ViewPostScreen from "../screens/ViewPostScreen";
-import ExploreScreen from "../screens/ExploreScreen";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import CreatePostScreen from "../screens/CreatePostScreen";
 import { Button } from 'react-native-paper';
@@ -53,7 +52,7 @@ const HomeStack = ({ navigation }) => {
                 //         />
                 //     </View>
                 // ),
-                headerLeft: () => (
+                headerRight: () => (
                     <View style={{marginLeft: 10}}>
                         <Button
                             onPress={handleLogout}
@@ -62,20 +61,20 @@ const HomeStack = ({ navigation }) => {
                         </Button>
                     </View>
                 ),
-                headerRight: () => (
-                    <View style={{marginRight: 10}}>
-                        <FontAwesome.Button 
-                            name="user-circle-o"
-                            size={22}
-                            backgroundColor="#fff"
-                            color="rgb(79, 175, 233)"
-                            onPress={() => navigation.navigate('My Profile')}
-                        />
-                    </View>
-                ),
+                // headerRight: () => (
+                //     <View style={{marginRight: 10}}>
+                //         <FontAwesome.Button 
+                //             name="user-circle-o"
+                //             size={22}
+                //             backgroundColor="#fff"
+                //             color="rgb(79, 175, 233)"
+                //             onPress={() => navigation.navigate('My Profile')}
+                //         />
+                //     </View>
+                // ),
             }}
         />
-        <Stack.Screen 
+        {/* <Stack.Screen 
             name="My Profile"
             component={MyProfileScreen}
             options={{
@@ -99,7 +98,7 @@ const HomeStack = ({ navigation }) => {
                     </View>
                 ),
             }}
-        />
+        /> */}
         <Stack.Screen 
             name="View Post"
             component={ViewPostScreen}
@@ -198,8 +197,8 @@ const AppStack = () => {
               iconName = "home";
             } else if (route.name === "Create Post") {
                 iconName = "plus";
-            } else if (route.name === "Explore") {
-                iconName = "search"
+            } else if (route.name === "My Profile") {
+                iconName = "user-circle-o"
             }
             return <FontAwesome name={iconName} size={size} color={color} />;
           },
@@ -213,7 +212,7 @@ const AppStack = () => {
       >
         <Tab.Screen name="HomeTab" component={HomeStack} />
         <Tab.Screen name="Create Post" component={CreateStack}/>
-        <Tab.Screen name="Explore" component={ExploreScreen} />
+        <Tab.Screen name="My Profile" component={MyProfileScreen} />
       </Tab.Navigator>
     )
 }
