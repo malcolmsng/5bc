@@ -7,10 +7,12 @@ import { Media, pickImage, takePicture } from '../components/Media';
 import { db } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 import 'firebase/firestore';
+import firebase from "firebase/app"
 
 export default function CreatePostScreen({ navigation }) {
   
-  const { currentUser } = useAuth()
+  const { currentUser, currentUserData, setCurrentUserData } = useAuth()
+  const docRef = db.collection("users").doc(currentUser.uid)
 
   const submitForm = (values) => {
     const { name, address, description, cuisine } = values
@@ -21,7 +23,19 @@ export default function CreatePostScreen({ navigation }) {
       cuisine,
       location: "location",
       author: currentUser.uid,
-      timestamp: new Date(),
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+    .then(
+      post => {
+        docRef.update({
+          posts: firebase.firestore.FieldValue.arrayUnion(post.id)
+        })
+        const posts = [...currentUserData.posts]
+        posts.push(post.id)
+        setCurrentUserData({
+            ...currentUserData, 
+            posts
+        })
     })
     .catch(err => {
       console.log(err)

@@ -41,12 +41,14 @@ export default function SignUpScreen({navigation}) {
         setLoading(true)
         setError('')
         const cred = await signup(email, password)
-        // await db.collection('users').doc(cred.user.uid).set({
-        //     password,
-        //     email,
-        //     firstName,
-        //     lastName,
-        // })
+        await db.collection('users').doc(cred.user.uid).set({
+            password,
+            email,
+            firstName,
+            lastName,
+            posts: [],
+            favourites: [],
+        })
 
     } catch (err) {
       console.log(err.message)
@@ -56,7 +58,6 @@ export default function SignUpScreen({navigation}) {
 
     setLoading(false)
 }
-
 
     return (
       <View style={styles.container}>
