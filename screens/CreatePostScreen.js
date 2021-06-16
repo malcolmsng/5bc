@@ -3,18 +3,11 @@ import React, { useState } from 'react'
 import { Text, View, StyleSheet, Alert, Platform, TouchableOpacity, ScrollView } from "react-native";
 import { Button, TextInput as Input  } from 'react-native-paper';
 import { Formik } from 'formik'
-import DropDownPicker from 'react-native-dropdown-picker';
 import { Media, pickImage, takePicture } from '../components/Media';
 import { db } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 import 'firebase/firestore';
-import ReactChipsInput from 'react-native-chips';
-import ReactChipInput from "react-chip-input";
-import {
-  Dropdown,
-  GroupDropdown,
-  MultiselectDropdown,
-} from 'sharingan-rn-modal-dropdown';
+import { MultiselectDropdown } from 'sharingan-rn-modal-dropdown';
 import firebase from "firebase/app"
 
 export default function CreatePostScreen({ navigation }) {
@@ -108,8 +101,6 @@ export default function CreatePostScreen({ navigation }) {
     },
   ];
   
-
-  const { currentUser } = useAuth()
   const [valueSS, setValueSS] = useState([]);
   const onChangeSS = (value) => {
     setValueSS(value);
