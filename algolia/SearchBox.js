@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { connectSearchBox } from 'react-instantsearch-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, IconButton } from 'react-native-paper';
 import SelectDropdown from 'react-native-select-dropdown'
 import { set } from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 
 const cuisines = ["Chinese", "Western", "Muslim", "Japanese", "Indian", "Thai", "Korean"]
@@ -14,10 +16,13 @@ const inputColor = "rgb(79, 175, 233)";
 const styles = StyleSheet.create({
   container: {
     width: "95%",
+    marginTop: 7
+  },
+  searchContainer: {
     display: "flex",
     alignItems: 'center',
-    justifyContent: 'center'
-    // backgroundColor: 'maroon',
+    justifyContent: 'center',
+
   },
   input: {
     height: 38,
@@ -35,6 +40,7 @@ const SearchBox = ({ currentRefinement, refine }) => {
   const [area, setArea] = useState()
   const cuisineDropdownRef = useRef({})
   const areaDropdownRef = useRef({})
+  const [openSearch, setOpenSearch] = useState(false)
 
   
 
@@ -48,8 +54,36 @@ const SearchBox = ({ currentRefinement, refine }) => {
     refine(searchStr)
   }
 
+  function renderToggleSearch() {
+    if (!openSearch) {
+      return (
+        <Button 
+          color="black"
+          mode="text"
+          onPress={() => setOpenSearch(true)}
+        >
+          <Text style={{color: inputColor}}>show search</Text>
+        </Button>
+      )
+    }
+    return (
+      <Button 
+        color="black"
+        mode="text"
+        onPress={() => setOpenSearch(false)}
+      >
+        <Text style={{color: inputColor}}>hide search</Text>
+      </Button>
+    )
+  }
+
   return (
     <View style={styles.container}>
+      
+      
+      {renderToggleSearch()}
+
+    <View style={{...styles.searchContainer, display: openSearch ? 'flex' : 'none'}}>
         <TextInput
           mode="outlined"
           style={styles.input}
@@ -169,6 +203,7 @@ const SearchBox = ({ currentRefinement, refine }) => {
       
   
   
+    </View>
     </View>
   );
 } 

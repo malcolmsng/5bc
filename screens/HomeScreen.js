@@ -46,7 +46,7 @@ const HomeScreen = ({ navigation }) => {
             {/* <Configure
                 hitsPerPage={1}
             /> */}
-            <SearchBox />
+            <SearchBox  />
             <InfiniteHits />
           </InstantSearch>
       </View>
