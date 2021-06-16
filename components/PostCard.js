@@ -8,6 +8,25 @@ import { useAuth } from '../contexts/AuthContext';
 import firebase from "firebase/app"
 
 export default function PostCard({ data, onPress }) {
+    const { 
+        address,
+        author,
+        cuisine,
+        description,
+        location,
+        name,
+    } = data
+
+    // console.log(address, author, cuisine, description, location, name)
+
+    // return (
+    //     <View>
+    //         <Text>
+    //             test
+    //         </Text>
+    //     </View>
+    // )
+
 
     const { currentUser, currentUserData, setCurrentUserData } = useAuth()
     const docRef = db.collection("users").doc(currentUser.uid)
