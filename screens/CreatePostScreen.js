@@ -8,12 +8,118 @@ import { Media, pickImage, takePicture } from '../components/Media';
 import { db } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 import 'firebase/firestore';
+import ReactChipsInput from 'react-native-chips';
+import ReactChipInput from "react-chip-input";
+import {
+  Dropdown,
+  GroupDropdown,
+  MultiselectDropdown,
+} from 'sharingan-rn-modal-dropdown';
 import firebase from "firebase/app"
 
 export default function CreatePostScreen({ navigation }) {
-
+  
   const { currentUser, currentUserData, setCurrentUserData } = useAuth()
   const docRef = db.collection("users").doc(currentUser.uid)
+
+  const AreaData = [
+    {
+      value: '1',
+      label: 'Hougang',
+    },
+    {
+      value: '2',
+      label: 'Jurong East',
+      
+    },
+    {
+      value: '3',
+      label: 'Seng Kang',
+      
+    },
+    {
+      value: '4',
+      label: 'Changi',
+      
+    },
+    {
+      value: '5',
+      label: 'West Coast',
+      
+    },
+    {
+      value: '6',
+      label: 'Serangoon',
+      
+    },
+    {
+      value: '7',
+      label: 'Kovan',
+    },
+    {
+      value: '8',
+      label: 'Yishun',
+    },
+    {
+      value: '9',
+      label: 'Boon Lay',
+    },
+    {
+      value: '10',
+      label: 'Lakeside',
+    },
+  ];
+
+  const CuisineData = [
+    {
+      value: '1',
+      label: 'Western',
+      //avatarSource: require('./ddicon.png'),
+    },
+    {
+      value: '2',
+      label: 'Chinese',
+      //avatarSource: require('./ddicon.png'),
+    },
+    {
+      value: '3',
+      label: 'Indian',
+      //avatarSource: require('./ddicon.png'),
+    },
+    {
+      value: '4',
+      label: 'Muslim',
+      //avatarSource: require('./ddicon.png'),
+    },
+    {
+      value: '5',
+      label: 'Japanese',
+      //avatarSource: require('./ddicon.png'),
+    },
+    {
+      value: '6',
+      label: 'Korean',
+      //avatarSource: require('./ddicon.png'),
+    },
+    {
+      value: '7',
+      label: 'Thai',
+      //avatarSource: require('./ddicon.png'),
+    },
+  ];
+  
+
+  const { currentUser } = useAuth()
+  const [valueSS, setValueSS] = useState([]);
+  const onChangeSS = (value) => {
+    setValueSS(value);
+  };
+
+
+  const [valueMS, setValueMS] = useState([]);
+  const onChangeMS = (value) => {
+    setValueMS(value);
+  };
 
   const submitForm = (values) => {
     const { name, address, description, cuisine } = values
@@ -57,7 +163,7 @@ export default function CreatePostScreen({ navigation }) {
         }}
       >
         {({ handleChange, handleSubmit, values }) => (
-          <View style={{width: "70%"}}>
+          <View style={{ width: "70%" }}>
             <Input
               style={styles.input}
               mode="outlined"
@@ -73,6 +179,7 @@ export default function CreatePostScreen({ navigation }) {
                 }
               }}
             />
+
 
             <Input 
               style={styles.input}
@@ -90,21 +197,36 @@ export default function CreatePostScreen({ navigation }) {
               }}
             />
 
-            <Input 
-              style={styles.input}
-              mode="outlined"
-              numberOfLines={1}
-              label="Cuisine"
-              placeholder='Specialty Cuisine of Stall'
-              onChangeText={handleChange('cuisine')}
-              value={values.cuisine}
-              selectionColor="rgb(79, 175, 233)"
-              theme={{
-                colors: {
-                  primary: "rgb(79, 175, 233)",
-                }
-              }}
-            />
+          <View style={{borderColor: "grey", borderWidth: 1, borderRadius: 5, justifyContent: "center", marginBottom: 10}}>
+            <View style={styles.containerchip}>
+              <MultiselectDropdown
+                label="Area"
+                data={AreaData}
+                enableSearch
+                // chipType="outlined"
+                value={valueSS}
+                onChange={onChangeSS}
+                itemTextStyle={{fontSize:17}}
+                chipStyle={{backgroundColor: "lightblue", borderColor: "lightblue"}}
+              />
+            </View>
+            </View>
+      
+
+            <View style={{borderColor: "grey", borderWidth: 1, borderRadius: 5, justifyContent: "center", marginBottom: 4}}>
+            <View style={styles.containerchip}>
+              <MultiselectDropdown
+                label="Cuisine"
+                data={CuisineData}
+                enableSearch
+                // chipType="outlined"
+                value={valueMS}
+                onChange={onChangeMS}
+                itemTextStyle={{fontSize:17}}
+                chipStyle={{backgroundColor: "lightpink", borderColor: "lightpink"}}
+              />
+            </View>
+            </View>
 
             <Input
               multiline
@@ -160,6 +282,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     //backgroundColor: "lightblue",
     width: "100%"
-  }
+  },
+  containerchip: {
+    paddingTop: 30,
+    marginLeft: 20,
+    marginRight: 20,
+    flex: 1,
+    marginBottom: 25
+  },
 });
 
