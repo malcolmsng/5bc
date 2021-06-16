@@ -14,6 +14,7 @@ const ForceInset = {
 
 export default function GalleryScreen() {
 
+
   const getUri = (item) => {
     return item.uri;
   }
