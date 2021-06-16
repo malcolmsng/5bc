@@ -4,6 +4,15 @@ import { connectInfiniteHits } from 'react-instantsearch-native';
 import PostCard from '../components/PostCard';
 
 const InfiniteHits = ({ hits, hasMore, refineNext }) => {
+  if (hits.length === 0) {
+    return (
+      <View style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+        <Text>
+          No results found
+        </Text>
+      </View>
+    )
+  } 
   return (
     <FlatList 
       style={{height: "100%", width: "95%"}}
