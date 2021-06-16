@@ -64,7 +64,6 @@ export default function PostCard({ data, onPress }) {
         setFave(false)
     }
 
-    const { name, cuisine, location, } = data 
     return (
         // <View style={{ width: "100%", flex: 1, justifyContent: "center", alignItems: "center", }}>
 
