@@ -72,7 +72,7 @@ export default function MyProfileScreen({ navigation }) {
               </View>
 
               <View style={styles.infoContainer}>
-                  <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>KiKi</Text>
+                  <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{currentUserData.firstName + " " + currentUserData.lastName}</Text>
                   {/* <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Photographer</Text> */}
               </View>
 

@@ -20,7 +20,7 @@ import GalleryScreen from '../screens/GalleryScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const HomeStack = ({ navigation }) => {
+const HomeStack = () => {
     const { logout } = useAuth()
 
     async function handleLogout() {
@@ -42,17 +42,6 @@ const HomeStack = ({ navigation }) => {
                     shadowColor: '#fff',
                     elevation: 0,
                 },
-                // headerRight: () => (
-                //     <View style={{marginRight: 10}}>
-                //         <FontAwesome.Button 
-                //             name="plus"
-                //             size={22}
-                //             backgroundColor="#fff"
-                //             color="rgb(79, 175, 233)"
-                //             onPress={() => navigation.navigate('Create Post')}
-                //         />
-                //     </View>
-                // ),
                 headerRight: () => (
                     <View style={{marginLeft: 10}}>
                         <TouchableOpacity
@@ -65,44 +54,8 @@ const HomeStack = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                 ),
-                // headerRight: () => (
-                //     <View style={{marginRight: 10}}>
-                //         <FontAwesome.Button 
-                //             name="user-circle-o"
-                //             size={22}
-                //             backgroundColor="#fff"
-                //             color="rgb(79, 175, 233)"
-                //             onPress={() => navigation.navigate('My Profile')}
-                //         />
-                //     </View>
-                // ),
             }}
         />
-        {/* <Stack.Screen 
-            name="My Profile"
-            component={MyProfileScreen}
-            options={{
-                headerTitleAlign: 'center',
-                headerTitleStyle: {
-                    color: "rgb(79, 175, 233)",
-                    fontSize: 16,
-                },
-                headerStyle: {
-                    shadowColor: '#fff',
-                    elevation: 0,
-                },
-                headerBackTitleVisible: false,
-                headerBackImage: () => (
-                    <View style={{marginRight: 10}}>
-                        <FontAwesome 
-                            name="chevron-left"
-                            size={22}
-                            color="rgb(79, 175, 233)"
-                        />
-                    </View>
-                ),
-            }}
-        /> */}
         <Stack.Screen 
             name="View Post"
             component={ViewPostScreen}
@@ -150,20 +103,6 @@ const CreateStack = ({ navigation }) => {
                         shadowColor: '#fff',
                         elevation: 0,
                     },
-                    // headerRight: () => (
-                    //     <View style={{marginRight: 10}}>
-                    //         <Button 
-                    //             mode="text"
-                    //             size={22}
-                    //             //backgroundColor="#fff"
-                    //             color="rgb(79, 175, 233)"
-                    //             onPress={() => console.log("reset")}
-                    //         >
-                    //             Reset
-                    //         </Button>
-                    //     </View>
-                    // ),
-                    //headerBackTitleVisible: false,
                     headerLeft: () => (
                         <View style={{marginLeft: 10}}>
                         <FontAwesome.Button
