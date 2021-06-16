@@ -6,8 +6,25 @@ import { Col, Row, Grid } from "react-native-paper-grid";
 
 
 export default function PostCard({ data, onPress }) {
+    const { 
+        address,
+        author,
+        cuisine,
+        description,
+        location,
+        name,
+    } = data
 
-    const { name, cuisine, location, } = data 
+    console.log(address, author, cuisine, description, location, name)
+
+    // return (
+    //     <View>
+    //         <Text>
+    //             test
+    //         </Text>
+    //     </View>
+    // )
+
     return (
         // <View style={{ width: "100%", flex: 1, justifyContent: "center", alignItems: "center", }}>
 
