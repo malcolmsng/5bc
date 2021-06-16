@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, Button, Image, StyleSheet} from "react-native";
+import { Text, SafeAreaView, Image, StyleSheet} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Headline, Paragraph, Subheading, Chip } from 'react-native-paper';
 import { db } from '../firebase';
@@ -56,7 +56,7 @@ const ViewPostScreen = ({ route }) => {
     }, [])
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View>
           <Image
             source={{ uri: 'https://picsum.photos/700'}}
@@ -87,7 +87,7 @@ const ViewPostScreen = ({ route }) => {
             {data.description}
           </Paragraph>
         </View>
-      </View>
+      </SafeAreaView>
     )
 }
 
