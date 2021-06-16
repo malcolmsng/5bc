@@ -27,7 +27,7 @@ const HomeStack = ({ navigation }) => {
     }
 
     return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home">
         <Stack.Screen 
             name="Home" 
             component={HomeScreen}
@@ -158,19 +158,19 @@ const CreateStack = ({ navigation }) => {
                         shadowColor: '#fff',
                         elevation: 0,
                     },
-                    headerRight: () => (
-                        <View style={{marginRight: 10}}>
-                            <Button 
-                                mode="text"
-                                size={22}
-                                //backgroundColor="#fff"
-                                color="rgb(79, 175, 233)"
-                                onPress={() => console.log("reset")}
-                            >
-                                Reset
-                            </Button>
-                        </View>
-                    ),
+                    // headerRight: () => (
+                    //     <View style={{marginRight: 10}}>
+                    //         <Button 
+                    //             mode="text"
+                    //             size={22}
+                    //             //backgroundColor="#fff"
+                    //             color="rgb(79, 175, 233)"
+                    //             onPress={() => console.log("reset")}
+                    //         >
+                    //             Reset
+                    //         </Button>
+                    //     </View>
+                    // ),
                     //headerBackTitleVisible: false,
                     headerLeft: () => (
                         <View style={{marginLeft: 10}}>

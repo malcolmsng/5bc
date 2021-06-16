@@ -1,5 +1,5 @@
 
-import React, { useState, useref } from 'react'
+import React, { useState } from 'react'
 import { Text, View, StyleSheet, Alert, Platform, TouchableOpacity, ScrollView } from "react-native";
 import { Button, TextInput as Input  } from 'react-native-paper';
 import { Formik } from 'formik'
@@ -10,10 +10,8 @@ import { useAuth } from '../contexts/AuthContext';
 import 'firebase/firestore';
 import firebase from "firebase/app"
 
-
 export default function CreatePostScreen({ navigation }) {
 
-  
   const { currentUser, currentUserData, setCurrentUserData } = useAuth()
   const docRef = db.collection("users").doc(currentUser.uid)
 
