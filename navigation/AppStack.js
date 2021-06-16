@@ -10,6 +10,10 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import CreatePostScreen from "../screens/CreatePostScreen";
 import { Button } from 'react-native-paper';
 import { useAuth } from '../contexts/AuthContext';
+import { Media } from '../components/Media';
+import Cam from '../components/Cam';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 
 const Stack = createStackNavigator();
@@ -23,7 +27,7 @@ const HomeStack = ({ navigation }) => {
     }
 
     return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home">
         <Stack.Screen 
             name="Home" 
             component={HomeScreen}
@@ -120,18 +124,6 @@ const HomeStack = ({ navigation }) => {
                     </View>
                 
                 ),
-                headerRight: () => (
-                    <View style={{marginRight: 10}}>
-                        <FontAwesome.Button 
-                            name="heart"
-                            size={22}
-                            backgroundColor="#fff"
-                            color="red"
-                            //onPress={() => navigation.navigate('My Profile')}
-                            //onPress favourite
-                        />
-                    </View>
-                ),
             }}
         />
     </Stack.Navigator>
@@ -154,19 +146,19 @@ const CreateStack = ({ navigation }) => {
                         shadowColor: '#fff',
                         elevation: 0,
                     },
-                    headerRight: () => (
-                        <View style={{marginRight: 10}}>
-                            <Button 
-                                mode="text"
-                                size={22}
-                                //backgroundColor="#fff"
-                                color="rgb(79, 175, 233)"
-                                onPress={() => console.log("reset")}
-                            >
-                                Reset
-                            </Button>
-                        </View>
-                    ),
+                    // headerRight: () => (
+                    //     <View style={{marginRight: 10}}>
+                    //         <Button 
+                    //             mode="text"
+                    //             size={22}
+                    //             //backgroundColor="#fff"
+                    //             color="rgb(79, 175, 233)"
+                    //             onPress={() => console.log("reset")}
+                    //         >
+                    //             Reset
+                    //         </Button>
+                    //     </View>
+                    // ),
                     //headerBackTitleVisible: false,
                     headerLeft: () => (
                         <View style={{marginLeft: 10}}>
@@ -180,6 +172,10 @@ const CreateStack = ({ navigation }) => {
                     </View>
                     ),
                 }}
+            />
+            <Stack.Screen 
+                name="Media"
+                component={Media}
             />
         </Stack.Navigator>
     )
@@ -212,6 +208,21 @@ const AppStack = () => {
         <Tab.Screen name="Create Post" component={CreateStack}/>
         <Tab.Screen name="Explore" component={ExploreScreen} />
       </Tab.Navigator>
+    )
+}
+
+const MediaStack = ({navigation}) => {
+    return (
+      
+            <Stack.Navigator>
+            <Stack.Screen 
+                name="Media"
+                component={Cam}
+                
+            />
+        </Stack.Navigator>
+    
+    
     )
 }
 

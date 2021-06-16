@@ -1,8 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { useAuth } from "../contexts/AuthContext";
+import { db } from '../firebase';
+import PostCard from '../components/PostCard'
 
-export default function MyProfileScreen() {
+export default function MyProfileScreen({ navigation }) {
+
+    const { currentUser, currentUserData } = useAuth() 
+    const [posts, setPosts] = useState([])
+    const [faves, setFaves] = useState([])
+
+    useEffect(() => {
+        const fetch =  async () => {
+            let renderList = []
+            for (const post of currentUserData.posts) {
+                const postData =  await db.collection("posts").doc(post).get().then(res => res.data())
+                if (postData) {
+                    renderList.push({...postData, id: post})
+                } else {
+                    await db.collection("users").doc(currentUser.uid).update({
+                        posts: firebase.firestore.FieldValue.arrayRemove(post)
+                    })
+                }
+            }
+            setPosts(renderList)
+        }
+        fetch()
+    }, [currentUserData.posts])
+
+    useEffect(() => {
+        const fetch =  async () => {
+            let renderList = []
+            for (const post of currentUserData.favourites) {
+                const postData =  await db.collection("posts").doc(post).get().then(res => res.data())
+                if (postData) {
+                    renderList.push({...postData, id: post})
+                } else {
+                    await db.collection("users").doc(currentUser.uid).update({
+                        favourites: firebase.firestore.FieldValue.arrayRemove(post)
+                    })
+                }
+            }
+            setFaves(renderList)
+        }
+        fetch()
+    }, [currentUserData.favourites])
+
     return (
       
       <SafeAreaView style={styles.container}>
@@ -32,11 +76,11 @@ export default function MyProfileScreen() {
 
               <View style={styles.statsContainer}>
                   <View style={styles.statsBox}>
-                      <Text style={[styles.text, { fontSize: 24 }]}>5</Text>
+                      <Text style={[styles.text, { fontSize: 24 }]}>{posts.length}</Text>
                       <Text style={[styles.text, styles.subText]}>Posts</Text>
                   </View>
                   <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                      <Text style={[styles.text, { fontSize: 24 }]}>3</Text>
+                      <Text style={[styles.text, { fontSize: 24 }]}>{faves.length}</Text>
                       <Text style={[styles.text, styles.subText]}>Favourite</Text>
                   </View>
                   {/* <View style={styles.statsBox}>
@@ -47,23 +91,15 @@ export default function MyProfileScreen() {
 
               <View style={{ marginTop: 32 }}>
                   <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                      <View style={styles.mediaImageContainer}>
-                          <Image source={{uri: "https://cdn4.sg.orstatic.com/userphoto/photo/0/0/00005VFFA14305B3B21D31px.jpg"}} style={styles.image} resizeMode="cover"></Image>
-                      </View>
-                      <View style={styles.mediaImageContainer}>
-                          <Image source={{uri: "https://hawkerpedia.s3-ap-southeast-1.amazonaws.com/hawker-centre-manually/Taman+Jurong+Mkt+_+FC+(618499)/nonstopdrinking_sf.JPG"}} style={styles.image} resizeMode="cover"></Image>
-                      </View>
-                      <View style={styles.mediaImageContainer}>
-                          <Image source={{uri: "https://sethlui.com/wp-content/uploads/2019/09/East-Coast-Lagoon-Food-Village-1.jpg?ezimgfmt=ng:webp/ngcb4"}} style={styles.image} resizeMode="cover"></Image>
-                      </View>
-                      <View style={styles.mediaImageContainer}>
-                          <Image source={{uri: "https://sethlui.com/wp-content/uploads/2019/09/East-Coast-Lagoon-Food-Village-34.jpg?ezimgfmt=ng:webp/ngcb4"}} style={styles.image} resizeMode="cover"></Image>
-                      </View>
-                      <View style={styles.mediaImageContainer}>
-                          <Image source={{uri: "https://sethlui.com/wp-content/uploads/2019/09/East-Coast-Lagoon-Food-Village-36.jpg?ezimgfmt=ng:webp/ngcb4"}} style={styles.image} resizeMode="cover"></Image>
-                      </View>
+                      {posts.map((data, index) => {
+                          return (
+                            <View style={styles.mediaImageContainer}>
+                                <PostCard data={data} onPress={() => navigation.navigate('View Post', {postId: data.id})}/>
+                           </View>
+                          )
+                      })}
                     <View style={styles.mediaCount}>
-                        <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>5</Text>
+                        <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>{posts.length}</Text>
                         <Text style={[styles.text, { fontSize: 12, color: "#DFD8C8", textTransform: "uppercase" }]}>Posts</Text>
                     </View>
                   </ScrollView>
@@ -71,18 +107,15 @@ export default function MyProfileScreen() {
                   <ScrollView>
                     <View style={{ marginTop: 32 }}>
                       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                          <View style={styles.mediaImageContainer}>
-                              <Image source={{uri: "https://sethlui.com/wp-content/uploads/2019/09/East-Coast-Lagoon-Food-Village-3.jpg?ezimgfmt=ng:webp/ngcb4"}} style={styles.image} resizeMode="cover"></Image>
-                          </View>
-                          <View style={styles.mediaImageContainer}>
-                              <Image source={{uri: "https://sethlui.com/wp-content/uploads/2020/04/ButterNut-Taman-Jurong-Market-Food-Centre-18.jpg"}} style={styles.image} resizeMode="cover"></Image>
-                          </View>
-                          <View style={styles.mediaImageContainer}>
-                              <Image source={{uri: "https://sethlui.com/wp-content/uploads/2019/09/East-Coast-Lagoon-Food-Village-33.jpg?ezimgfmt=ng:webp/ngcb4"}} style={styles.image} resizeMode="cover"></Image>
-                          </View>
-                          
+                            {faves.map((data, index) => {
+                                return (
+                                    <View style={styles.mediaImageContainer}>
+                                        <PostCard data={data} onPress={() => navigation.navigate('View Post', {postId: data.id})}/>
+                                    </View>
+                                )
+                            })}
                           <View style={styles.mediaCount}>
-                              <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>3</Text>
+                              <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>{faves.length}</Text>
                               <Text style={[styles.text, { fontSize: 12, color: "#DFD8C8", textTransform: "uppercase" }]}>Favourites</Text>
                           </View>
                   </ScrollView>
@@ -121,7 +154,7 @@ const styles = StyleSheet.create({
       backgroundColor: "#FFF"
   },
   text: {
-      fontFamily: "HelveticaNeue",
+      //fontFamily: "HelveticaNeue",
       color: "#52575D"
   },
   image: {

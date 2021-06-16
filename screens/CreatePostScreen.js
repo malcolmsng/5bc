@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import { Text, View, StyleSheet, Alert, Platform, TouchableOpacity, ScrollView } from "react-native";
 import { Button, TextInput as Input  } from 'react-native-paper';
@@ -14,8 +15,12 @@ import {
   GroupDropdown,
   MultiselectDropdown,
 } from 'sharingan-rn-modal-dropdown';
+import firebase from "firebase/app"
 
 export default function CreatePostScreen({ navigation }) {
+  
+  const { currentUser, currentUserData, setCurrentUserData } = useAuth()
+  const docRef = db.collection("users").doc(currentUser.uid)
 
   const AreaData = [
     {
@@ -116,8 +121,6 @@ export default function CreatePostScreen({ navigation }) {
     setValueMS(value);
   };
 
-
-
   const submitForm = (values) => {
     const { name, address, description, cuisine } = values
     db.collection('posts').add({
@@ -127,7 +130,19 @@ export default function CreatePostScreen({ navigation }) {
       cuisine,
       location: "location",
       author: currentUser.uid,
-      timestamp: new Date(),
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+    .then(
+      post => {
+        docRef.update({
+          posts: firebase.firestore.FieldValue.arrayUnion(post.id)
+        })
+        const posts = [...currentUserData.posts]
+        posts.push(post.id)
+        setCurrentUserData({
+            ...currentUserData, 
+            posts
+        })
     })
     .catch(err => {
       console.log(err)
@@ -229,28 +244,17 @@ export default function CreatePostScreen({ navigation }) {
                 }
               }}
             />
-            
-            {/* <View style= {{flexDirection : "row", flex: 1, justifyContent: 'space-evenly', marginTop: '10'}}>
-              <Button 
-                compact = {true}
-                mode = 'contained'
-                icon = "camera-image"
-                color = "maroon"
-                //onPress = {() => {pickImage}}
-              >
-                UPLOAD IMAGE
+                         
+            <Button compact = {true}
+            mode = 'contained'
+            icon = "camera-image"
+            color = "maroon"
+              onPress = {() => {navigation.navigate('Media')}}
+            >
+              UPLOAD IMAGE
               </Button>
-              <Button 
-                compact = {true}
-                mode = 'contained'
-                icon = 'camera'
-                color = 'maroon'
-                style = {{width : 170}}
-                //onPress = {() => {takePicture}}
-              >
-                TAKE PHOTO
-              </Button>  
-            </View> */}
+               
+                
             <Button 
               style={{marginTop: 10}}
               color='maroon'
