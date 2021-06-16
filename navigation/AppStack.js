@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from "../screens/HomeScreen";
@@ -54,11 +54,14 @@ const HomeStack = ({ navigation }) => {
                 // ),
                 headerRight: () => (
                     <View style={{marginLeft: 10}}>
-                        <Button
+                        <TouchableOpacity
                             onPress={handleLogout}
+                            style={{marginRight: 10}}
                         >
-                            Sign Out
-                        </Button>
+                            <Text style={{color: "rgb(79, 175, 233)"}}>
+                            Log out
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 ),
                 // headerRight: () => (
