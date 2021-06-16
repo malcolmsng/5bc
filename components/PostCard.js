@@ -13,15 +13,12 @@ export default function PostCard({ data, onPress }) {
         author,
         cuisine,
         description,
-        location,
+        area,
         name,
         objectID
     } = data
 
-
     // console.log(address, author, cuisine, description, location, name)
-
-  
 
     const { currentUser, currentUserData, setCurrentUserData } = useAuth()
     const docRef = db.collection("users").doc(currentUser.uid)
@@ -70,7 +67,7 @@ export default function PostCard({ data, onPress }) {
             <Paragraph>
                 <Chip style={{ backgroundColor: "lightpink", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, }} >{cuisine}</Chip>         
                 <Text style={{color: "white"}}>s</Text>
-                <Chip style={{ backgroundColor: "lightblue", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, }} >{location}</Chip> 
+                <Chip style={{ backgroundColor: "lightblue", justifyContent: "center", alignItems: "center", }} textStyle={{ fontSize: 17, }} >{area}</Chip> 
             </Paragraph> 
         </View>
         </Card.Content>
