@@ -11,8 +11,9 @@ import CreatePostScreen from "../screens/CreatePostScreen";
 import { Button } from 'react-native-paper';
 import { useAuth } from '../contexts/AuthContext';
 import { Media } from '../components/Media';
-import Cam from '../components/Cam';
+
 import { NavigationContainer } from '@react-navigation/native';
+import ImagePicker from '../screens/ImagePicker';
 
 
 
@@ -177,6 +178,12 @@ const CreateStack = ({ navigation }) => {
                 name="Media"
                 component={Media}
             />
+
+            <Stack.Screen 
+                name="ImagePicker"
+                component={ImagePicker}
+            />
+            
         </Stack.Navigator>
     )
 }
@@ -211,19 +218,6 @@ const AppStack = () => {
     )
 }
 
-const MediaStack = ({navigation}) => {
-    return (
-      
-            <Stack.Navigator>
-            <Stack.Screen 
-                name="Media"
-                component={Cam}
-                
-            />
-        </Stack.Navigator>
-    
-    
-    )
-}
+
 
 export default AppStack
