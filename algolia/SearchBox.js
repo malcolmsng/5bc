@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
 });
 
 const SearchBox = ({ currentRefinement, refine }) => {
-  console.log("rendering searchbox")
   const [boxVal, setBoxVal] = useState("")
   const [cuisine, setCuisine] = useState()
   const [area, setArea] = useState()

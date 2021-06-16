@@ -12,20 +12,18 @@ const ForceInset = {
 };
 
 
-export default function GalleryScreen() {
+export default function GalleryScreen({navigation}) {
 
-
-  const getUri = (item) => {
-    return item.uri;
-  }
 
   const onDone = (data) => {
     data = data.map((item) => item.uri)
-    Alert.alert('Selected items are', JSON.stringify(data));
+    // Alert.alert('Selected items are', JSON.stringify(data));
+    navigation.navigate("Create Post", { data })
+
   };
 
   const goBack = () => {
-    console.log('Going back use Navigator goBack() hook');
+//     console.log('Going back use Navigator goBack() hook');
   };
 
   return (
