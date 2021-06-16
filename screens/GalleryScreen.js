@@ -14,7 +14,6 @@ const ForceInset = {
 
 export default function GalleryScreen({navigation}) {
 
-  
 
   const onDone = (data) => {
     data = data.map((item) => item.uri)
@@ -24,7 +23,7 @@ export default function GalleryScreen({navigation}) {
   };
 
   const goBack = () => {
-    console.log('Going back use Navigator goBack() hook');
+//     console.log('Going back use Navigator goBack() hook');
   };
 
   return (

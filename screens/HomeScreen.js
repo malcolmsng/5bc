@@ -22,7 +22,7 @@ const searchClient = algoliasearch(
   '79987c1d86acd8938119de64df89c4b2'
 );
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
 
   
 
@@ -43,7 +43,7 @@ const HomeScreen = ({ navigation }) => {
             searchClient={searchClient}
             indexName="posts"
           >
-            {/* <Configure
+            {/* <Configurey
                 hitsPerPage={1}
             /> */}
             <SearchBox  />

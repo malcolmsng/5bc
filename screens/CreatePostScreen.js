@@ -1,13 +1,14 @@
   
 import React, { useState, useEffect } from 'react'
 import { Text, Image, View, StyleSheet, Alert, Platform, TouchableOpacity, ScrollView } from "react-native";
-import { Button, TextInput as Input  } from 'react-native-paper';
+import { Button, HelperText, TextInput as Input  } from 'react-native-paper';
 import { Formik } from 'formik'
 import { Media, pickImage, takePicture } from '../components/Media';
 import { db } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 import 'firebase/firestore';
 import firebase from "firebase/app"
+import * as Yup from 'yup';
 
 
 export default function CreatePostScreen({ navigation, route }) {
@@ -26,6 +27,19 @@ export default function CreatePostScreen({ navigation, route }) {
 
   const { currentUser, currentUserData, setCurrentUserData } = useAuth()
   const docRef = db.collection("users").doc(currentUser.uid)
+
+  const vSchema = Yup.object().shape({
+    name: Yup.string()
+      .required('*Name Required'),
+    address: Yup.string()
+      .required('*Address Required'),
+    description: Yup.string()
+      .required('*Description Required'),
+    area: Yup.string()
+      .required('*Area Required'),
+    cuisine: Yup.string()
+      .required('*Cuisine Required'),
+  });
 
   const submitForm = (values) => {
     const { name, address, description, cuisine, area } = values
@@ -75,6 +89,7 @@ export default function CreatePostScreen({ navigation, route }) {
     <View style={styles.container}>
       <Formik
         initialValues={{ name: '', address: '', description: '', area: '', cuisine: '' }}
+        validationSchema={vSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           submitForm(values);
           setSubmitting(false)
@@ -83,8 +98,11 @@ export default function CreatePostScreen({ navigation, route }) {
           alert('Post Submitted!')
         }}
       >
-        {({ handleChange, handleSubmit, values, resetForm }) => (
+        {({ handleChange, handleSubmit, values, resetForm, isValid, errors, touched }) => (
           <View style={{ width: "70%" }}>
+            <HelperText style={styles.helper} type="error" visible={errors.name && touched.name}>
+              {errors.name}
+            </HelperText>
             <Input
               style={styles.input}
               mode="outlined"
@@ -100,7 +118,9 @@ export default function CreatePostScreen({ navigation, route }) {
                 }
               }}
             />
-
+            <HelperText style={styles.helper} type="error" visible={errors.address && touched.address}>
+              {errors.address}
+            </HelperText>
             <Input 
               style={styles.input}
               mode="outlined"
@@ -116,13 +136,15 @@ export default function CreatePostScreen({ navigation, route }) {
                 }
               }}
             />
-
+            <HelperText style={styles.helper} type="error" visible={errors.area && touched.area}>
+              {errors.area}
+            </HelperText>
             <Input 
               style={styles.input}
               mode="outlined"
               numberOfLines={1}
               label="Area"
-              placeholder='Area of stall'
+              placeholder='Jurong East, Bedok, Yishun, etc ...'
               onChangeText={handleChange('area')}
               value={values.area}
               selectionColor="rgb(79, 175, 233)"
@@ -132,13 +154,15 @@ export default function CreatePostScreen({ navigation, route }) {
                 }
               }}
             />
-    
+            <HelperText style={styles.helper} type="error" visible={errors.cuisine && touched.cuisine}>
+              {errors.cuisine}
+            </HelperText>
             <Input 
               style={styles.input}
               mode="outlined"
               numberOfLines={1}
               label="Cuisine"
-              placeholder='Cuisine of stall'
+              placeholder='Western, Chinese, Muslim, Indian etc ...'
               onChangeText={handleChange('cuisine')}
               value={values.cuisine}
               selectionColor="rgb(79, 175, 233)"
@@ -148,14 +172,16 @@ export default function CreatePostScreen({ navigation, route }) {
                 }
               }}
             />  
-
+            <HelperText style={styles.helper} type="error" visible={errors.description && touched.description}>
+              {errors.description}
+            </HelperText>      
             <Input
               multiline
               numberOfLines={10}
               style={styles.input}
               mode="outlined"
               label="Description"
-              placeholder='Some details...'
+              placeholder='Opening hours, recommended  food, price range, etc ...'
               onChangeText={handleChange('description')}
               value={values.description}
               selectionColor="rgb(79, 175, 233)"
@@ -165,12 +191,11 @@ export default function CreatePostScreen({ navigation, route }) {
                 }
               }}
             />
-                         
             <Button compact = {true}
             mode = 'contained'
             icon = "camera-image"
             color = "maroon"
-            style = {{marginTop: 20}}
+            style = {{marginTop: 40}}
               onPress = {() => {navigation.navigate('Media')}}
             >
               UPLOAD IMAGE
@@ -198,7 +223,7 @@ export default function CreatePostScreen({ navigation, route }) {
             <Button 
               style={{marginTop: 10}}
               color='maroon'
-              //disabled={!isValid}
+              disabled={!isValid}
               onPress={handleSubmit} 
               mode="contained"
               > Post 
@@ -214,7 +239,7 @@ export default function CreatePostScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   input: {
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: -15,
   },
   container: {
     flex: 1,
@@ -222,7 +247,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     //backgroundColor: "lightblue",
     width: "100%",
-    marginTop: 20
+    paddingBottom: 10,
+    marginTop: -15
   },
   containerchip: {
     paddingTop: 30,
@@ -235,5 +261,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 300,
   },
+  helper: {
+    marginTop: 30,
+    marginBottom: -9
+  }
 });
 
