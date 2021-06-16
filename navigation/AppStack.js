@@ -12,7 +12,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { Media } from '../components/Media';
 
 import { NavigationContainer } from '@react-navigation/native';
-import ImagePicker from '../screens/ImagePicker';
+import ImagePicker from '../screens/GalleryScreen';
+import GalleryScreen from '../screens/GalleryScreen';
 
 
 
@@ -182,8 +183,8 @@ const CreateStack = ({ navigation }) => {
             />
 
             <Stack.Screen 
-                name="ImagePicker"
-                component={ImagePicker}
+                name="GalleryScreen"
+                component={GalleryScreen}
             />
             
         </Stack.Navigator>
