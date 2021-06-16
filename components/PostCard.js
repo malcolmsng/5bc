@@ -15,18 +15,13 @@ export default function PostCard({ data, onPress }) {
         description,
         location,
         name,
+        objectID
     } = data
+
 
     // console.log(address, author, cuisine, description, location, name)
 
-    // return (
-    //     <View>
-    //         <Text>
-    //             test
-    //         </Text>
-    //     </View>
-    // )
-
+  
 
     const { currentUser, currentUserData, setCurrentUserData } = useAuth()
     const docRef = db.collection("users").doc(currentUser.uid)
@@ -35,7 +30,7 @@ export default function PostCard({ data, onPress }) {
 
     useEffect(() => {
         if (currentUser && currentUserData && currentUserData.favourites) {
-            setFave(currentUserData.favourites.includes(data.id))
+            setFave(currentUserData.favourites.includes(objectID))
         }
     }, [])
 
