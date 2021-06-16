@@ -4,6 +4,8 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from '../firebase';
 import PostCard from '../components/PostCard'
+import 'firebase/firestore';
+import firebase from "firebase/app"
 
 export default function MyProfileScreen({ navigation }) {
 
@@ -70,7 +72,7 @@ export default function MyProfileScreen({ navigation }) {
               </View>
 
               <View style={styles.infoContainer}>
-                  <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>KiKi</Text>
+                  <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{currentUserData.firstName + " " + currentUserData.lastName}</Text>
                   {/* <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Photographer</Text> */}
               </View>
 
@@ -151,7 +153,8 @@ export default function MyProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      backgroundColor: "#FFF"
+      backgroundColor: "#FFF",
+      paddingBottom: 10
   },
   text: {
       //fontFamily: "HelveticaNeue",
@@ -178,7 +181,8 @@ const styles = StyleSheet.create({
       width: 200,
       height: 200,
       borderRadius: 100,
-      overflow: "hidden"
+      overflow: "hidden",
+      marginTop: 30
   },
   dm: {
       backgroundColor: "#41444B",
@@ -226,9 +230,9 @@ const styles = StyleSheet.create({
       flex: 1
   },
   mediaImageContainer: {
-      width: 180,
-      height: 200,
-      borderRadius: 10,
+    width: 270,
+    //   height: 200,
+    //   borderRadius: 10,
       overflow: "hidden",
       marginHorizontal: 6
   },
