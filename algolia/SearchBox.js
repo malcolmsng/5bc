@@ -37,10 +37,9 @@ const SearchBox = ({ currentRefinement, refine }) => {
   const [boxVal, setBoxVal] = useState("")
   const [cuisine, setCuisine] = useState()
   const [area, setArea] = useState()
-  // const cuisineDropdownRef = useRef({})
-  // const areaDropdownRef = useRef({})
+  const cuisineDropdownRef = useRef({})
+  const areaDropdownRef = useRef({})
   const [openSearch, setOpenSearch] = useState(false)
-
   
 
   function search() {
@@ -104,8 +103,8 @@ const SearchBox = ({ currentRefinement, refine }) => {
 
       
 
-       {/* <View style={{display: "flex", flexDirection: 'row'}}>
-         {/* <View style={{flex: 1}}>
+       <View style={{display: "flex", flexDirection: 'row'}}>
+          <View style={{flex: 1}}>
           <SelectDropdown
           ref={cuisineDropdownRef}
           buttonStyle={{
@@ -153,7 +152,7 @@ const SearchBox = ({ currentRefinement, refine }) => {
             }}
           />
          </View>
-      </View>  */}
+      </View> 
        
       <View style={{display: 'flex', flexDirection: 'row', marginTop: 7, paddingBottom: 7}}>
         <View style={{flex: 1}}></View>
