@@ -10,6 +10,10 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import CreatePostScreen from "../screens/CreatePostScreen";
 import { Button } from 'react-native-paper';
 import { useAuth } from '../contexts/AuthContext';
+import { Media } from '../components/Media';
+import Cam from '../components/Cam';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 
 const Stack = createStackNavigator();
@@ -168,6 +172,10 @@ const CreateStack = ({ navigation }) => {
                     ),
                 }}
             />
+            <Stack.Screen 
+                name="Media"
+                component={Media}
+            />
         </Stack.Navigator>
     )
 }
@@ -199,6 +207,21 @@ const AppStack = () => {
         <Tab.Screen name="Create Post" component={CreateStack}/>
         <Tab.Screen name="Explore" component={ExploreScreen} />
       </Tab.Navigator>
+    )
+}
+
+const MediaStack = ({navigation}) => {
+    return (
+      
+            <Stack.Navigator>
+            <Stack.Screen 
+                name="Media"
+                component={Cam}
+                
+            />
+        </Stack.Navigator>
+    
+    
     )
 }
 
