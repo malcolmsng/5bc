@@ -15,12 +15,21 @@ const ViewPostScreen = ({ route }) => {
       })
     }, [])
 
+    const randInt = String(Math.floor(Math.random() * 16))
+    const [ pic, setPic] = useState()
+
+    useEffect(() => {
+        db.collection("images").doc(randInt).onSnapshot(doc => {
+            setPic(doc.data().uri)
+        })
+    }, [])
+
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
         <View>
           <Image
-            source={{ uri: 'https://picsum.photos/700' }}
+            source={{ uri: pic }}
             style={styles.image}
           />
         </View>

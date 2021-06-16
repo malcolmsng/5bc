@@ -23,6 +23,15 @@ export default function PostCard({ data, onPress }) {
     const { currentUser, currentUserData, setCurrentUserData } = useAuth()
     const docRef = db.collection("users").doc(currentUser.uid)
 
+    const randInt = String(Math.floor(Math.random() * 16))
+    const [ pic, setPic] = useState()
+
+    useEffect(() => {
+        db.collection("images").doc(randInt).onSnapshot(doc => {
+            setPic(doc.data().uri)
+        })
+    }, [])
+
     const [fave, setFave] = useState(false)
 
     useEffect(() => {
@@ -71,7 +80,7 @@ export default function PostCard({ data, onPress }) {
             </Paragraph> 
         </View>
         </Card.Content>
-        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+        <Card.Cover source={{ uri: pic }} />
         <Card.Actions style={{justifyContent: "space-around"}}>
             <FontAwesome.Button 
                 name= { fave ? "heart" : "heart-o"}
