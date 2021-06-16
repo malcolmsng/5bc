@@ -230,9 +230,9 @@ const styles = StyleSheet.create({
       flex: 1
   },
   mediaImageContainer: {
-      width: 180,
-      height: 200,
-      borderRadius: 10,
+    width: 270,
+    //   height: 200,
+    //   borderRadius: 10,
       overflow: "hidden",
       marginHorizontal: 6
   },
