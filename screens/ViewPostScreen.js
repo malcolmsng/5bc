@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, SafeAreaView, Image, StyleSheet, View } from "react-native";
+import { Text, SafeAreaView, Image, StyleSheet, View, ScrollView } from "react-native";
 import { Headline, Paragraph, Subheading, Chip } from 'react-native-paper';
 import { db } from '../firebase';
 import { Ionicons } from '@expo/vector-icons'; 
@@ -17,9 +17,10 @@ const ViewPostScreen = ({ route }) => {
 
     return (
       <SafeAreaView style={styles.container}>
+        <ScrollView>
         <View>
           <Image
-            source={{ uri: 'https://picsum.photos/700'}}
+            source={{ uri: 'https://picsum.photos/700' }}
             style={styles.image}
           />
         </View>
@@ -48,6 +49,7 @@ const ViewPostScreen = ({ route }) => {
             {data.description}
           </Paragraph>
         </View>
+        </ScrollView>
       </SafeAreaView>
     )
 }
@@ -64,8 +66,8 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    height: 300,
-    width: "100%"
+    height: 200,
+    width: "100%",
   },
   faveButton: {
     justifyContent: "flex-end",

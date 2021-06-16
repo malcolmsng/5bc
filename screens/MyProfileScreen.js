@@ -153,7 +153,8 @@ export default function MyProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      backgroundColor: "#FFF"
+      backgroundColor: "#FFF",
+      paddingBottom: 10
   },
   text: {
       //fontFamily: "HelveticaNeue",
@@ -180,7 +181,8 @@ const styles = StyleSheet.create({
       width: 200,
       height: 200,
       borderRadius: 100,
-      overflow: "hidden"
+      overflow: "hidden",
+      marginTop: 30
   },
   dm: {
       backgroundColor: "#41444B",
