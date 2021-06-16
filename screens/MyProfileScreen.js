@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from "react-n
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from '../firebase';
-import PostCard from '../components/PostCard'
+import ProfileCard from '../components/ProfileCard'
 import 'firebase/firestore';
 import firebase from "firebase/app"
 
@@ -96,7 +96,7 @@ export default function MyProfileScreen({ navigation }) {
                       {posts.map((data, index) => {
                           return (
                             <View style={styles.mediaImageContainer}>
-                                <PostCard data={data} onPress={() => navigation.navigate('View Post', {postId: data.id})}/>
+                                <ProfileCard data={data} onPress={() => navigation.navigate('View Post', {postId: data.id})}/>
                            </View>
                           )
                       })}
@@ -112,7 +112,7 @@ export default function MyProfileScreen({ navigation }) {
                             {faves.map((data, index) => {
                                 return (
                                     <View style={styles.mediaImageContainer}>
-                                        <PostCard data={data} onPress={() => navigation.navigate('View Post', {postId: data.id})}/>
+                                        <ProfileCard data={data} onPress={() => navigation.navigate('View Post', {postId: data.id})}/>
                                     </View>
                                 )
                             })}
