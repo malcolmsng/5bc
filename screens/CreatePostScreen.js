@@ -208,6 +208,7 @@ export default function CreatePostScreen({ navigation, route }) {
             <Button 
               style={{marginTop: 10}}
               onPress={() => setPaths([])}
+              color = "maroon"
               mode="contained"
             >
                 Reset Images
@@ -215,6 +216,8 @@ export default function CreatePostScreen({ navigation, route }) {
             <Button 
               style={{marginTop: 10}}
               onPress={resetForm}
+              color = "maroon"
+
               mode="contained"
             >
                 Reset text
